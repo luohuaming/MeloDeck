@@ -198,6 +198,53 @@
       color: var(--secondary);
     }
 
+    /*
+     * 主题截图展示区直接使用用户提供的真实 iOS 界面截图，不裁切播放器主体。
+     * 图片保持原始纵横比，桌面端三列并排、窄屏端单列排列；后续新增主题时只需
+     * 追加同结构的 figure 元素，不需要改动现有布局规则。
+     */
+    .theme-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .theme-card {
+      margin: 0;
+      padding: 12px 12px 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: linear-gradient(155deg, var(--surface-strong), var(--surface));
+      backdrop-filter: blur(18px);
+    }
+
+    .theme-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      background: #18181b;
+    }
+
+    .theme-card figcaption {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 8px 0;
+    }
+
+    .theme-name {
+      font-size: 1.08rem;
+      font-weight: 750;
+    }
+
+    .theme-note {
+      color: var(--secondary);
+      font-size: 0.86rem;
+    }
+
     .principles {
       display: grid;
       grid-template-columns: 0.85fr 1.15fr;
@@ -237,6 +284,7 @@
       nav { gap: 14px; }
       .hero { min-height: 62vh; padding-top: 30px; }
       .feature-grid,
+      .theme-gallery,
       .principles { grid-template-columns: 1fr; }
       footer { flex-direction: column; }
     }
@@ -268,6 +316,42 @@
           into one carefully designed listening experience.
         </p>
         <div class="status">Currently in active development</div>
+      </section>
+
+      <section aria-labelledby="themes-title">
+        <div class="section-heading">
+          <p class="eyebrow">Pocket Cassette</p>
+          <h2 id="themes-title">A player you can make your own</h2>
+          <p>Three tactile colorways bring a different character to the same focused listening experience.</p>
+        </div>
+
+        <!--
+          每张截图都提供具体的替代文本，帮助使用屏幕阅读器的访客理解主题颜色和
+          播放器形态；loading="lazy" 避免首屏一次下载全部大图，提升移动网络体验。
+        -->
+        <div class="theme-gallery">
+          <figure class="theme-card">
+            <img src="assets/pocket-cassette-cream.jpg" alt="MeloDeck Pocket Cassette player in the warm Cream theme" loading="lazy">
+            <figcaption>
+              <span class="theme-name">Cream</span>
+              <span class="theme-note">Warm and timeless</span>
+            </figcaption>
+          </figure>
+          <figure class="theme-card">
+            <img src="assets/pocket-cassette-mint.jpg" alt="MeloDeck Pocket Cassette player in the fresh Mint theme" loading="lazy">
+            <figcaption>
+              <span class="theme-name">Mint</span>
+              <span class="theme-note">Fresh and calm</span>
+            </figcaption>
+          </figure>
+          <figure class="theme-card">
+            <img src="assets/pocket-cassette-pink.jpg" alt="MeloDeck Pocket Cassette player in the vivid Pink theme" loading="lazy">
+            <figcaption>
+              <span class="theme-name">Pink</span>
+              <span class="theme-note">Bright and playful</span>
+            </figcaption>
+          </figure>
+        </div>
       </section>
 
       <section aria-labelledby="features-title">
