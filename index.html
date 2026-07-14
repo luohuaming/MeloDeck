@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MeloDeck is a privacy-conscious music library and player for user-owned audio.">
+  <meta name="theme-color" content="#09090b">
+  <title>MeloDeck — Your music, beautifully yours</title>
+  <style>
+    /*
+     * 页面视觉说明：
+     * 使用纯 CSS 构建深色玻璃质感，不依赖第三方字体、脚本或跟踪服务。
+     * 这样 GitHub Pages 只托管必要的静态内容，降低隐私和供应链风险。
+     */
+    :root {
+      color-scheme: dark;
+      --background: #09090b;
+      --surface: rgba(255, 255, 255, 0.065);
+      --surface-strong: rgba(255, 255, 255, 0.11);
+      --text: #fafafa;
+      --secondary: #a1a1aa;
+      --accent: #f05d8b;
+      --accent-warm: #f3a54a;
+      --border: rgba(255, 255, 255, 0.12);
+      --max-width: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(240, 93, 139, 0.18), transparent 34rem),
+        radial-gradient(circle at 88% 32%, rgba(243, 165, 74, 0.12), transparent 32rem),
+        var(--background);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin: 0 auto;
+    }
+
+    /*
+     * 导航只保留产品名、隐私和 GitHub 三个入口。
+     * 后续如增加 App Store 页面，可以在不改变主体布局的情况下追加同级链接。
+     */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 28px 0;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: var(--secondary);
+      font-size: 0.95rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      transition: color 160ms ease;
+    }
+
+    nav a:hover,
+    nav a:focus-visible { color: var(--text); }
+
+    .hero {
+      min-height: 68vh;
+      display: grid;
+      align-content: center;
+      padding: 64px 0 84px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--accent);
+      font-weight: 750;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 6.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(100deg, var(--accent), var(--accent-warm));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 30px 0 0;
+      color: var(--secondary);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      margin-top: 30px;
+      padding: 10px 15px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: #d4d4d8;
+      font-size: 0.9rem;
+      backdrop-filter: blur(16px);
+    }
+
+    .status::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+    }
+
+    section { padding: 68px 0; }
+
+    .section-heading {
+      max-width: 700px;
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      letter-spacing: -0.035em;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--secondary);
+    }
+
+    /*
+     * 功能卡片使用响应式网格：手机单列、较宽屏幕三列。
+     * 卡片仅表达已确定的产品方向，不承诺尚未发布的商店日期或平台审核状态。
+     */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 240px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(145deg, var(--surface-strong), var(--surface));
+      backdrop-filter: blur(18px);
+    }
+
+    .card-number {
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .card h3 {
+      margin: 40px 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--secondary);
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .principle-title,
+    .principle-copy {
+      padding: 34px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: var(--surface);
+    }
+
+    .principle-copy p {
+      margin: 0 0 18px;
+      color: var(--secondary);
+    }
+
+    .principle-copy p:last-child { margin-bottom: 0; }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 36px 0 50px;
+      border-top: 1px solid var(--border);
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+
+    footer a { color: var(--text); }
+
+    @media (max-width: 760px) {
+      header { align-items: flex-start; }
+      nav { gap: 14px; }
+      .hero { min-height: 62vh; padding-top: 30px; }
+      .feature-grid,
+      .principles { grid-template-columns: 1fr; }
+      footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="./" aria-label="MeloDeck home">MELODECK</a>
+      <nav aria-label="Primary navigation">
+        <a href="#principles">Principles</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://github.com/luohuaming" rel="me">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow">A music library for your own audio</p>
+        <h1 id="hero-title">Your music.<br><span class="gradient-text">Beautifully yours.</span></h1>
+        <p class="hero-copy">
+          MeloDeck is an independent, privacy-conscious music library and player in active
+          development for iOS and Android. It brings local files and user-owned cloud audio
+          into one carefully designed listening experience.
+        </p>
+        <div class="status">Currently in active development</div>
+      </section>
+
+      <section aria-labelledby="features-title">
+        <div class="section-heading">
+          <h2 id="features-title">Built around ownership</h2>
+          <p>MeloDeck is designed for music files that users already own or are authorized to access.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="card">
+            <span class="card-number">01</span>
+            <h3>Your sources</h3>
+            <p>Organize local files, system libraries and explicitly selected directories from supported cloud storage providers.</p>
+          </article>
+          <article class="card">
+            <span class="card-number">02</span>
+            <h3>Unified metadata</h3>
+            <p>Keep titles, artists, albums and artwork in a non-destructive metadata layer without rewriting the original audio files.</p>
+          </article>
+          <article class="card">
+            <span class="card-number">03</span>
+            <h3>A player with character</h3>
+            <p>Enjoy tactile, themeable player designs and real-time audio visualization generated from the audio being played.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="principles" class="principles" aria-labelledby="principles-title">
+        <div class="principle-title">
+          <p class="eyebrow">Responsible by design</p>
+          <h2 id="principles-title">Private listening, clear boundaries.</h2>
+        </div>
+        <div class="principle-copy">
+          <p>MeloDeck does not provide a public music catalogue, redistribute user files, scrape streaming platforms or bypass DRM, subscriptions or provider restrictions.</p>
+          <p>Cloud access is designed around official APIs or standard protocols, with credentials kept in platform-protected storage and file access limited to directories selected by the user.</p>
+          <p>Planned metadata enrichment uses identifiers, duration and acoustic fingerprints where permitted. Raw audio is not uploaded for metadata matching.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 MeloDeck. An independent project by luohuaming.</span>
+      <span><a href="privacy.html">Privacy</a> · <a href="https://github.com/luohuaming/MeloDeck">Project page</a></span>
+    </footer>
+  </div>
+</body>
+</html>
